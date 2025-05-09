@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Particles - WebGL Cosmic Visualizations</title>
+    <link rel="stylesheet" href="../src/css/styles.css">
+</head>
+<body>
+    <div id="container" class="visualization-container">
+        <canvas id="glCanvas"></canvas>
+        
+        <div id="controls" class="controls">
+            <div class="controls-header">
+                <h1>Cosmic Particles</h1>
+                <div class="controls-actions">
+                    <button id="theme-toggle" aria-label="Toggle dark/light theme">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="home-link" aria-label="Back to home">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </a>
+                    <a href="../pages/mandelbulb.html" class="nav-link" title="Mandelbulb Explorer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="6"></circle>
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                            <line x1="12" y1="8" x2="12" y2="16"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <h3>Visual Presets</h3>
+                <div id="preset-buttons" class="button-group">
+                    <button data-preset="nebula" class="preset-button active">Nebula</button>
+                    <button data-preset="galaxy" class="preset-button">Galaxy</button>
+                    <button data-preset="stardust" class="preset-button">Stardust</button>
+                    <button data-preset="energetic" class="preset-button">Energetic</button>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <h3>Particle Settings</h3>
+                <div id="particle-controls"></div>
+            </div>
+
+            <div class="controls-section">
+                <h3>Motion & Flow</h3>
+                <div id="motion-controls"></div>
+            </div>
+
+            <div class="controls-section">
+                <h3>Color & Appearance</h3>
+                <div id="appearance-controls"></div>
+            </div>
+
+            <div class="controls-section">
+                <h3>Camera</h3>
+                <div id="camera-controls"></div>
+                <button id="reset-camera" class="action-button">Reset Camera</button>
+            </div>
+
+            <div class="controls-footer">
+                <div class="performance">
+                    <span>FPS: <span id="fps">0</span></span>
+                    <span>Particles: <span id="particle-count">0</span></span>
+                </div>
+                <a href="https://github.com/your-github-username/webgl-cosmic-visualizations" target="_blank" rel="noopener noreferrer" class="github-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../src/js/cosmicParticles.js"></script>
+</body>
+</html> 

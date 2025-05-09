@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta
+         name="description"
+         content="Explore the fascinating 3D Mandelbulb fractal with this interactive WebGL visualization tool"
+      />
+      <title>Mandelbulb Explorer | Advanced 3D Fractal Visualization</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+         rel="stylesheet"
+      />
+      <link
+         href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded"
+         rel="stylesheet"
+      />
+      <link rel="stylesheet" href="styles.css" />
+      <link
+         rel="icon"
+         type="image/svg+xml"
+         href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIxNiIgZmlsbD0iIzA4MDgxMCIvPjxwYXRoIGQ9Ik0xNiA3QzEyLjEzNDEgNyA5IDEwLjEzNDEgOSAxNEM5IDE3Ljg2NTkgMTIuMTM0MSAyMSAxNiAyMUMxOS44NjU5IDIxIDIzIDE3Ljg2NTkgMjMgMTRDMjMgMTAuMTM0MSAxOS44NjU5IDcgMTYgN1oiIHN0cm9rZT0iIzQwNDBBMCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48cGF0aCBkPSJNMTYgM0MxMC40NzcyIDMgNiA3LjQ3NzIgNiAxM0M2IDE4LjUyMjggMTAuNDc3MiAyMyAxNiAyM0MyMS41MjI4IDIzIDI2IDE4LjUyMjggMjYgMTNDMjYgNy40NzcyIDIxLjUyMjggMyAxNiAzWiIgc3Ryb2tlPSIjNjA2MEMwIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iMiAyIi8+PHBhdGggZD0iTTE2IDVDMTEUMDQ0NiA1IDcgOS4wNDQ2IDcgMTRDNyAxOC45NTU0IDExLjA0NDYgMjMgMTYgMjNDMjAuOTU1NCAyMyAyNSAxOC45NTU0IDI1IDE0QzI1IDkuMDQ0NiAyMC45NTU0IDUgMTYgNVoiIHN0cm9rZT0idXJsKCNwYWludDBfbGluZWFyKSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXIiIHgxPSIxNiIgeTE9IjUiIHgyPSIxNiIgeTI9IjIzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agc3RvcC1jb2xvcj0iIzgwODBGRiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzQwNDBBMCIgc3RvcC1vcGFjaXR5PSIwLjYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48L3N2Zz4="
+      />
+   </head>
+   <body>
+      <!-- Canvas for WebGL rendering -->
+      <canvas id="canvas"></canvas>
+
+      <!-- App Header -->
+      <header id="app-header">
+         <div class="logo">
+            <svg
+               width="24"
+               height="24"
+               viewBox="0 0 32 32"
+               fill="none"
+               xmlns="http://www.w3.org/2000/svg"
+            >
+               <circle cx="16" cy="16" r="16" fill="#08081f" fill-opacity="0.2" />
+               <path
+                  d="M16 7C12.1341 7 9 10.1341 9 14C9 17.8659 12.1341 21 16 21C19.8659 21 23 17.8659 23 14C23 10.1341 19.8659 7 16 7Z"
+                  stroke="#4A6FA5"
+                  stroke-width="1.5"
+               />
+               <path
+                  d="M16 3C10.4772 3 6 7.4772 6 13C6 18.5228 10.4772 23 16 23C21.5228 23 26 18.5228 26 13C26 7.4772 21.5228 3 16 3Z"
+                  stroke="#334E75"
+                  stroke-width="1.5"
+                  stroke-dasharray="2 2"
+               />
+               <path
+                  d="M16 5C11.0446 5 7 9.0446 7 14C7 18.9554 11.0446 23 16 23C20.9554 23 25 18.9554 25 14C25 9.0446 20.9554 5 16 5Z"
+                  stroke="url(#paint0_linear)"
+                  stroke-width="1.5"
+               />
+               <defs>
+                  <linearGradient
+                     id="paint0_linear"
+                     x1="16"
+                     y1="5"
+                     x2="16"
+                     y2="23"
+                     gradientUnits="userSpaceOnUse"
+                  >
+                     <stop stop-color="#4A6FA5" />
+                     <stop offset="1" stop-color="#334E75" stop-opacity="0.8" />
+                  </linearGradient>
+               </defs>
+            </svg>
+         </div>
+         <div id="app-title">Mandelbulb <span>Explorer</span></div>
+         <div class="header-actions">
+            <div class="button" id="theme-toggle" aria-label="Toggle theme">
+               <span class="material-symbols-rounded icon">dark_mode</span>
+            </div>
+            <div class="button" id="save-image-btn">
+               <span class="material-symbols-rounded icon">photo_camera</span>
+               <span>Save Image</span>
+            </div>
+            <a href="cosmic-particles.html" class="button" id="switch-model-btn">
+               <span class="material-symbols-rounded icon">grain</span>
+               <span>Cosmic Particles</span>
+            </a>
+            <div class="button" id="help-button">
+               <span class="material-symbols-rounded icon">help</span>
+               <span>Help</span>
+            </div>
+         </div>
+      </header>
+
+      <!-- Performance Indicator -->
+      <div id="performance-tag">
+         <span class="material-symbols-rounded" style="font-size: 12px; margin-right: 4px;">speed</span>
+         High Performance Mode
+      </div>
+
+      <!-- Version Tag -->
+      <div id="version-tag">v1.2.0</div>
+
+      <!-- Made With Badge -->
+      <div id="made-with-badge">
+         Made with <span class="heart">♥</span> using WebGL
+      </div>
+
+      <!-- UI Container Layout - Right Side Controls -->
+      <div id="ui-container">
+         <!-- Presets Panel -->
+         <div class="panel expanded" id="presets-panel">
+            <div class="panel-header">
+               <span class="material-symbols-rounded panel-icon">tune</span>
+               <div class="panel-title">Presets</div>
+               <span class="material-symbols-rounded collapse-icon">expand_more</span>
+            </div>
+            <div class="panel-content">
+               <select id="preset-selector" class="dropdown" aria-label="Preset Selection" title="Select a preset">
+                  <option value="default">Default</option>
+                  <option value="psychedelic">Psychedelic</option>
+                  <option value="fiery">Fiery</option>
+                  <option value="ocean">Ocean</option>
+                  <option value="midnight">Midnight Abyss</option>
+                  <option value="performance">Performance Mode</option>
+               </select>
+
+               <div class="button-row">
+                  <div class="button primary" id="load-preset-btn">
+                     <span class="material-symbols-rounded icon">downloading</span>
+                     <span>Load Preset</span>
+                  </div>
+                  <div class="button secondary" id="save-image-btn">
+                     <span class="material-symbols-rounded icon">photo_camera</span>
+                     <span>Save Image</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Fractal Panel -->
+         <div class="panel expanded" id="fractal-panel">
+            <div class="panel-header">
+               <span class="material-symbols-rounded panel-icon">insights</span>
+               <div class="panel-title">Fractal Properties</div>
+               <span class="material-symbols-rounded collapse-icon">expand_more</span>
+            </div>
+            <div class="panel-content">
+               <div class="slider-container" data-value="8.0" data-min="1" data-max="12">
+                  <div class="slider-header">
+                     <div class="slider-label" id="power-label">
+                        Power
+                        <span class="tooltip"
+                           >?
+                           <span class="tooltiptext"
+                              >Controls the exponential power in the Mandelbulb formula. Changing
+                              this creates vastly different fractal shapes.</span
+                           >
+                        </span>
+                     </div>
+                     <div class="slider-value" id="power-value">8.0</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="1"
+                     max="12"
+                     step="0.1"
+                     value="8.0"
+                     class="slider"
+                     id="power-slider"
+                     aria-labelledby="power-label"
+                     title="Power"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="9" data-min="1" data-max="15">
+                  <div class="slider-header">
+                     <div class="slider-label" id="iterations-label">
+                        Iterations
+                        <span class="tooltip"
+                           >?
+                           <span class="tooltiptext"
+                              >Controls the number of formula iterations. Higher values create more
+                              detailed fractals but reduce performance.</span
+                           >
+                        </span>
+                     </div>
+                     <div class="slider-value" id="iterations-value">9</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="1"
+                     max="15"
+                     step="1"
+                     value="9"
+                     class="slider"
+                     id="iterations-slider"
+                     aria-labelledby="iterations-label"
+                     title="Iterations"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="2.0" data-min="1.0" data-max="5.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="bailout-label">
+                        Bailout
+                        <span class="tooltip"
+                           >?
+                           <span class="tooltiptext"
+                              >Determines when a point is considered to escape to infinity. Affects
+                              the shape's boundaries.</span
+                           >
+                        </span>
+                     </div>
+                     <div class="slider-value" id="bailout-value">2.0</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="1.0"
+                     max="5.0"
+                     step="0.1"
+                     value="2.0"
+                     class="slider"
+                     id="bailout-slider"
+                     aria-labelledby="bailout-label"
+                     title="Bailout"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Rendering Panel -->
+         <div class="panel expanded" id="rendering-panel">
+            <div class="panel-header">
+               <span class="material-symbols-rounded panel-icon">auto_fix_high</span>
+               <div class="panel-title">Rendering</div>
+               <span class="material-symbols-rounded collapse-icon">expand_more</span>
+            </div>
+            <div class="panel-content">
+               <div class="slider-container" data-value="1.0" data-min="0.25" data-max="1.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="quality-label">
+                        Quality
+                        <span class="tooltip"
+                           >?
+                           <span class="tooltiptext"
+                              >Controls the rendering resolution. Lower values improve performance
+                              but reduce image quality.</span
+                           >
+                        </span>
+                     </div>
+                     <div class="slider-value" id="quality-value">1.0</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.25"
+                     max="1.0"
+                     step="0.25"
+                     value="1.0"
+                     class="slider"
+                     id="quality-slider"
+                     aria-labelledby="quality-label"
+                     title="Quality"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="0.001" data-min="0.0001" data-max="0.01">
+                  <div class="slider-header">
+                     <div class="slider-label" id="epsilon-label">
+                        Detail Level
+                        <span class="tooltip"
+                           >?
+                           <span class="tooltiptext"
+                              >Controls surface detail precision. Lower values show more detail but
+                              may cause artifacts.</span
+                           >
+                        </span>
+                     </div>
+                     <div class="slider-value" id="epsilon-value">0.001</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.0001"
+                     max="0.01"
+                     step="0.0001"
+                     value="0.001"
+                     class="slider"
+                     id="epsilon-slider"
+                     aria-labelledby="epsilon-label"
+                     title="Detail Level"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="100" data-min="30" data-max="200">
+                  <div class="slider-header">
+                     <div class="slider-label" id="max-steps-label">
+                        Ray Steps
+                        <span class="tooltip"
+                           >?
+                           <span class="tooltiptext"
+                              >Maximum number of steps in ray marching. Higher values improve
+                              accuracy but reduce performance.</span
+                           >
+                        </span>
+                     </div>
+                     <div class="slider-value" id="max-steps-value">100</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="30"
+                     max="200"
+                     step="10"
+                     value="100"
+                     class="slider"
+                     id="max-steps-slider"
+                     aria-labelledby="max-steps-label"
+                     title="Ray Steps"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Lighting Panel -->
+         <div class="panel" id="lighting-panel">
+            <div class="panel-header">
+               <span class="material-symbols-rounded panel-icon">light_mode</span>
+               <div class="panel-title">Lighting</div>
+               <span class="material-symbols-rounded collapse-icon">expand_more</span>
+            </div>
+            <div class="panel-content">
+               <div class="slider-container" data-value="0.2" data-min="0.0" data-max="1.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="ambient-label">Ambient Light</div>
+                     <div class="slider-value" id="ambient-value">0.2</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.0"
+                     max="1.0"
+                     step="0.05"
+                     value="0.2"
+                     class="slider"
+                     id="ambient-slider"
+                     aria-labelledby="ambient-label"
+                     title="Ambient Light"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="0.7" data-min="0.0" data-max="1.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="diffuse-label">Diffuse Light</div>
+                     <div class="slider-value" id="diffuse-value">0.7</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.0"
+                     max="1.0"
+                     step="0.05"
+                     value="0.7"
+                     class="slider"
+                     id="diffuse-slider"
+                     aria-labelledby="diffuse-label"
+                     title="Diffuse Light"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="0.3" data-min="0.0" data-max="1.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="specular-label">Specular Highlight</div>
+                     <div class="slider-value" id="specular-value">0.3</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.0"
+                     max="1.0"
+                     step="0.05"
+                     value="0.3"
+                     class="slider"
+                     id="specular-slider"
+                     aria-labelledby="specular-label"
+                     title="Specular Highlight"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="30" data-min="1.0" data-max="100.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="shininess-label">Shininess</div>
+                     <div class="slider-value" id="shininess-value">30</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="1.0"
+                     max="100.0"
+                     step="1.0"
+                     value="30.0"
+                     class="slider"
+                     id="shininess-slider"
+                     aria-labelledby="shininess-label"
+                     title="Shininess"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="0.15" data-min="0.0" data-max="1.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="fog-density-label">Fog Density</div>
+                     <div class="slider-value" id="fog-density-value">0.15</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.0"
+                     max="1.0"
+                     step="0.01"
+                     value="0.15"
+                     class="slider"
+                     id="fog-density-slider"
+                     aria-labelledby="fog-density-label"
+                     title="Fog Density"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Color Panel -->
+         <div class="panel" id="color-panel">
+            <div class="panel-header">
+               <span class="material-symbols-rounded panel-icon">palette</span>
+               <div class="panel-title">Color</div>
+               <span class="material-symbols-rounded collapse-icon">expand_more</span>
+            </div>
+            <div class="panel-content">
+               <div class="color-swatches">
+                  <div class="color-swatch active" data-mode="0" title="Grayscale"></div>
+                  <div class="color-swatch" data-mode="1" title="Slate"></div>
+                  <div class="color-swatch" data-mode="2" title="Dark Blue"></div>
+                  <div class="color-swatch" data-mode="3" title="Monochrome"></div>
+                  <div class="color-swatch" data-mode="4" title="Midnight"></div>
+                  <div class="color-swatch" data-mode="5" title="Neon"></div>
+               </div>
+
+               <div class="slider-container" data-value="0.5" data-min="0.1" data-max="2.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="color-scale-label">Color Scale</div>
+                     <div class="slider-value" id="color-scale-value">0.5</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.1"
+                     max="2.0"
+                     step="0.1"
+                     value="0.5"
+                     class="slider"
+                     id="color-scale-slider"
+                     aria-labelledby="color-scale-label"
+                     title="Color Scale"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="3.0" data-min="0.5" data-max="10.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="color-cycles-label">Color Cycles</div>
+                     <div class="slider-value" id="color-cycles-value">3.0</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.5"
+                     max="10.0"
+                     step="0.5"
+                     value="3.0"
+                     class="slider"
+                     id="color-cycles-slider"
+                     aria-labelledby="color-cycles-label"
+                     title="Color Cycles"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Camera Panel -->
+         <div class="panel" id="camera-panel">
+            <div class="panel-header">
+               <span class="material-symbols-rounded panel-icon">camera</span>
+               <div class="panel-title">Camera</div>
+               <span class="material-symbols-rounded collapse-icon">expand_more</span>
+            </div>
+            <div class="panel-content">
+               <div class="button" id="reset-camera-btn">
+                  <span class="material-symbols-rounded icon">restart_alt</span>
+                  <span>Reset Camera Position</span>
+               </div>
+
+               <label class="checkbox-container">
+                  <input type="checkbox" id="auto-rotate-checkbox" />
+                  <span class="custom-checkbox"></span>
+                  <span class="checkbox-label">Auto-rotate Camera</span>
+               </label>
+
+               <div class="slider-container" data-value="1.0" data-min="0.1" data-max="3.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="rotation-speed-label">Rotation Speed</div>
+                     <div class="slider-value" id="rotation-speed-value">1.0</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.1"
+                     max="3.0"
+                     step="0.1"
+                     value="1.0"
+                     class="slider"
+                     id="rotation-speed-slider"
+                     aria-labelledby="rotation-speed-label"
+                     title="Rotation Speed"
+                     disabled
+                  />
+                  <div class="slider-track"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Camera Controls - Left Side -->
+      <div id="camera-controls">
+         <div class="control-button" id="zoom-in-btn" title="Zoom In">
+            <span class="material-symbols-rounded control-icon">add</span>
+         </div>
+         <div class="control-button" id="reset-view-btn" title="Reset View">
+            <span class="material-symbols-rounded control-icon">home</span>
+         </div>
+         <div class="control-button" id="zoom-out-btn" title="Zoom Out">
+            <span class="material-symbols-rounded control-icon">remove</span>
+         </div>
+      </div>
+
+      <!-- Help Panel -->
+      <div id="help-panel">
+         <div class="help-header">
+            <div class="help-title">Instructions</div>
+            <div class="close-button" id="close-help">×</div>
+         </div>
+         <div class="help-content">
+            <div class="help-section">
+               <div class="help-section-title">Navigation Controls</div>
+               <div class="help-item">
+                  <div class="help-key">Left Click + Drag</div>
+                  <div class="help-description">Rotate the view around the fractal</div>
+               </div>
+               <div class="help-item">
+                  <div class="help-key">Right Click + Drag</div>
+                  <div class="help-description">Pan the view</div>
+               </div>
+               <div class="help-item">
+                  <div class="help-key">Mouse Wheel</div>
+                  <div class="help-description">Zoom in and out</div>
+               </div>
+            </div>
+
+            <div class="help-section">
+               <div class="help-section-title">Keyboard Shortcuts</div>
+               <div class="help-item">
+                  <div class="help-key">H</div>
+                  <div class="help-description">Toggle help panel</div>
+               </div>
+               <div class="help-item">
+                  <div class="help-key">R</div>
+                  <div class="help-description">Reset camera position</div>
+               </div>
+               <div class="help-item">
+                  <div class="help-key">S</div>
+                  <div class="help-description">Save screenshot</div>
+               </div>
+               <div class="help-item">
+                  <div class="help-key">Space</div>
+                  <div class="help-description">Toggle auto-rotation</div>
+               </div>
+               <div class="help-item">
+                  <div class="help-key">+ / -</div>
+                  <div class="help-description">Increase/decrease detail level</div>
+               </div>
+            </div>
+
+            <div class="help-section">
+               <div class="help-section-title">Tips</div>
+               <ul class="help-tips">
+                  <li>Start with the "Performance" preset if you experience low frame rates.</li>
+                  <li>Decreasing the "Quality" slider greatly improves performance.</li>
+                  <li>
+                     Try different Power values (4-12) for dramatically different fractal shapes.
+                  </li>
+                  <li>For the most details, increase Iterations while decreasing Epsilon.</li>
+                  <li>Use the "Save Image" button to capture your creations.</li>
+               </ul>
+            </div>
+
+            <div class="help-section">
+               <div class="help-section-title">What is a Mandelbulb?</div>
+               <p class="help-text">
+                  The Mandelbulb is a three-dimensional analogue of the Mandelbrot set, constructed
+                  using spherical coordinates. It was discovered by Daniel White and Paul Nylander
+                  in 2009. The explorer allows you to visualize and navigate this complex
+                  mathematical object in real-time using your browser's WebGL capabilities.
+               </p>
+            </div>
+         </div>
+      </div>
+
+      <!-- Stats display -->
+      <div id="stats">FPS: 0 | Resolution: 0x0</div>
+
+      <!-- Status bar -->
+      <div id="status-bar">
+         <div class="status-item">
+            <span class="material-symbols-rounded status-item-icon">monitor</span>
+            <span id="status-rendering">Initializing...</span>
+         </div>
+         <div class="status-item">
+            <span class="material-symbols-rounded status-item-icon">mouse</span>
+            <span id="status-mouse">X: 0, Y: 0, Z: 0</span>
+         </div>
+      </div>
+
+      <!-- Loading overlay -->
+      <div id="loading-overlay">
+         <div class="logo-large">
+            <svg
+               width="80"
+               height="80"
+               viewBox="0 0 32 32"
+               fill="none"
+               xmlns="http://www.w3.org/2000/svg"
+            >
+               <circle cx="16" cy="16" r="16" fill="#08081f" fill-opacity="0.2" />
+               <path
+                  d="M16 7C12.1341 7 9 10.1341 9 14C9 17.8659 12.1341 21 16 21C19.8659 21 23 17.8659 23 14C23 10.1341 19.8659 7 16 7Z"
+                  stroke="#4A6FA5"
+                  stroke-width="1.5"
+               />
+               <path
+                  d="M16 3C10.4772 3 6 7.4772 6 13C6 18.5228 10.4772 23 16 23C21.5228 23 26 18.5228 26 13C26 7.4772 21.5228 3 16 3Z"
+                  stroke="#334E75"
+                  stroke-width="1.5"
+                  stroke-dasharray="2 2"
+               />
+               <path
+                  d="M16 5C11.0446 5 7 9.0446 7 14C7 18.9554 11.0446 23 16 23C20.9554 23 25 18.9554 25 14C25 9.0446 20.9554 5 16 5Z"
+                  stroke="url(#paint0_linear)"
+                  stroke-width="1.5"
+               />
+               <defs>
+                  <linearGradient
+                     id="paint0_linear"
+                     x1="16"
+                     y1="5"
+                     x2="16"
+                     y2="23"
+                     gradientUnits="userSpaceOnUse"
+                  >
+                     <stop stop-color="#4A6FA5" />
+                     <stop offset="1" stop-color="#334E75" stop-opacity="0.8" />
+                  </linearGradient>
+               </defs>
+            </svg>
+         </div>
+         <span class="loader"></span>
+         <div class="loading-text">Initializing Mandelbulb Explorer</div>
+         <div class="progress-container">
+            <div class="progress-bar" id="loading-progress"></div>
+         </div>
+      </div>
+
+      <!-- Welcome modal -->
+      <div id="welcome-modal" style="display: none">
+         <div class="modal-content">
+            <div class="modal-header">
+               <div class="modal-title">
+                  <svg
+                     width="24"
+                     height="24"
+                     viewBox="0 0 32 32"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg"
+                     style="margin-right: 10px; vertical-align: middle"
+                  >
+                     <circle cx="16" cy="16" r="16" fill="#08081f" fill-opacity="0.2" />
+                     <path
+                        d="M16 7C12.1341 7 9 10.1341 9 14C9 17.8659 12.1341 21 16 21C19.8659 21 23 17.8659 23 14C23 10.1341 19.8659 7 16 7Z"
+                        stroke="#4A6FA5"
+                        stroke-width="1.5"
+                     />
+                     <path
+                        d="M16 3C10.4772 3 6 7.4772 6 13C6 18.5228 10.4772 23 16 23C21.5228 23 26 18.5228 26 13C26 7.4772 21.5228 3 16 3Z"
+                        stroke="#334E75"
+                        stroke-width="1.5"
+                        stroke-dasharray="2 2"
+                     />
+                     <path
+                        d="M16 5C11.0446 5 7 9.0446 7 14C7 18.9554 11.0446 23 16 23C20.9554 23 25 18.9554 25 14C25 9.0446 20.9554 5 16 5Z"
+                        stroke="url(#paint0_linear)"
+                        stroke-width="1.5"
+                     />
+                     <defs>
+                        <linearGradient
+                           id="paint0_linear"
+                           x1="16"
+                           y1="5"
+                           x2="16"
+                           y2="23"
+                           gradientUnits="userSpaceOnUse"
+                        >
+                           <stop stop-color="#4A6FA5" />
+                           <stop offset="1" stop-color="#334E75" stop-opacity="0.8" />
+                        </linearGradient>
+                     </defs>
+                  </svg>
+                  Mandelbulb Explorer
+               </div>
+               <div class="close-button" id="close-welcome">×</div>
+            </div>
+            <div class="modal-body">
+               <p>
+                  Welcome to the Mandelbulb Explorer - an interactive tool for exploring the
+                  fascinating three-dimensional Mandelbulb fractal. Discover beautiful mathematical
+                  structures and create stunning visuals with intuitive controls.
+               </p>
+
+               <div class="feature-grid">
+                  <div class="feature-item">
+                     <span class="material-symbols-rounded feature-icon">touch_app</span>
+                     <div class="feature-title">Interactive Navigation</div>
+                     <div class="feature-description">
+                        Rotate, pan, and zoom to explore the fractal from any angle
+                     </div>
+                  </div>
+                  <div class="feature-item">
+                     <span class="material-symbols-rounded feature-icon">tune</span>
+                     <div class="feature-title">Customizable Parameters</div>
+                     <div class="feature-description">
+                        Adjust fractal properties to create unique mathematical shapes
+                     </div>
+                  </div>
+                  <div class="feature-item">
+                     <span class="material-symbols-rounded feature-icon">palette</span>
+                     <div class="feature-title">Visual Controls</div>
+                     <div class="feature-description">
+                        Choose from various color schemes to enhance visualization
+                     </div>
+                  </div>
+                  <div class="feature-item">
+                     <span class="material-symbols-rounded feature-icon">photo_camera</span>
+                     <div class="feature-title">Image Capture</div>
+                     <div class="feature-description">
+                        Save high-quality images of your fractal explorations
+                     </div>
+                  </div>
+               </div>
+
+               <p>Press 'H' anytime to view help and keyboard shortcuts.</p>
+            </div>
+            <div class="modal-footer">
+               <div class="button primary" id="start-exploring-btn">
+                  <span class="material-symbols-rounded icon">explore</span>
+                  <span>Start Exploring</span>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Notification -->
+      <div class="notification" id="notification">
+         <div class="notification-title">Preset Loaded</div>
+         <div class="notification-message">The selected preset has been applied successfully.</div>
+      </div>
+
+      <!-- Progress Bar for Rendering -->
+      <div id="render-progress">
+         <div class="render-progress-inner"></div>
+      </div>
+
+      <!-- JavaScript -->
+      <script src="mandelbulb.js"></script>
+      <script src="main.js"></script>
+   </body>
+</html>

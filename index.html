@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL Cosmic Visualizations</title>
+    <link rel="stylesheet" href="src/css/styles.css">
+    <style>
+        .projects-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        
+        .project-card {
+            width: 320px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .mandelbulb-image {
+            background-image: url('screenshots/mandelbulb.jpg');
+        }
+        
+        .particles-image {
+            background-image: url('screenshots/cosmic-particles.jpg');
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+        }
+        
+        .project-info h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-info p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        
+        .project-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: #4a5af8;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+        
+        .project-link:hover {
+            background-color: #3949e4;
+        }
+        
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>WebGL Cosmic Visualizations</h1>
+        <p>Explore the beauty of 3D mathematics and particle simulations</p>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light theme">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+        </button>
+    </header>
+
+    <main>
+        <div class="projects-container">
+            <div class="project-card">
+                <div class="project-image mandelbulb-image"></div>
+                <div class="project-info">
+                    <h3>Mandelbulb Explorer</h3>
+                    <p>Explore a 3D fractal with interactive controls for power, iterations, and more.</p>
+                    <a href="pages/mandelbulb.html" class="project-link">Explore Mandelbulb</a>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image particles-image"></div>
+                <div class="project-info">
+                    <h3>Cosmic Particles</h3>
+                    <p>Watch thousands of particles move in fluid-like patterns creating cosmic effects.</p>
+                    <a href="pages/cosmic-particles.html" class="project-link">Explore Particles</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Created with WebGL and JavaScript &copy; <span id="year"></span></p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // Check for saved theme preference or use preferred color scheme
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const currentTheme = localStorage.getItem('theme');
+        
+        if (currentTheme === 'light') {
+            document.body.classList.add('light-theme');
+        } else if (currentTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+        } else if (prefersDarkScheme.matches) {
+            document.body.classList.add('dark-theme');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            if (document.body.classList.contains('dark-theme')) {
+                document.body.classList.remove('dark-theme');
+                document.body.classList.add('light-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.remove('light-theme');
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta
+         name="description"
+         content="Experience mesmerizing cosmic particle animations with this interactive WebGL visualization tool"
+      />
+      <title>Cosmic Particles | 3D Particle System Visualization</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+         rel="stylesheet"
+      />
+      <link
+         href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded"
+         rel="stylesheet"
+      />
+      <link rel="stylesheet" href="styles.css" />
+      <link
+         rel="icon"
+         type="image/svg+xml"
+         href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIxNiIgZmlsbD0iIzA4MDgxMCIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjgiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMCIgc3Ryb2tlPSIjNjA2MEMwIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjQiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMCIgc3Ryb2tlPSIjNDA0MEEwIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjEiIGZpbGw9IiM4MDgwRkYiLz48L3N2Zz4="
+      />
+   </head>
+   <body>
+      <!-- Canvas for WebGL rendering -->
+      <canvas id="canvas"></canvas>
+
+      <!-- App Header -->
+      <header id="app-header">
+         <div class="logo">
+            <svg
+               width="24"
+               height="24"
+               viewBox="0 0 32 32"
+               fill="none"
+               xmlns="http://www.w3.org/2000/svg"
+            >
+               <circle cx="16" cy="16" r="16" fill="#08081f" fill-opacity="0.2" />
+               <circle cx="16" cy="16" r="8" fill="#000" fill-opacity="0" stroke="#4A6FA5" stroke-width="1.5"/>
+               <circle cx="16" cy="16" r="4" fill="#000" fill-opacity="0" stroke="#334E75" stroke-width="1.5"/>
+               <circle cx="16" cy="16" r="1" fill="#4A6FA5"/>
+            </svg>
+         </div>
+         <div id="app-title">Cosmic <span>Particles</span></div>
+         <div class="header-actions">
+            <div class="button" id="theme-toggle" aria-label="Toggle theme">
+               <span class="material-symbols-rounded icon">dark_mode</span>
+            </div>
+            <div class="button" id="save-image-btn">
+               <span class="material-symbols-rounded icon">photo_camera</span>
+               <span>Save Image</span>
+            </div>
+            <a href="deneme21.html" class="button" id="switch-model-btn">
+               <span class="material-symbols-rounded icon">3d_rotation</span>
+               <span>Mandelbulb</span>
+            </a>
+            <div class="button" id="help-button">
+               <span class="material-symbols-rounded icon">help</span>
+               <span>Help</span>
+            </div>
+         </div>
+      </header>
+
+      <!-- Performance Indicator -->
+      <div id="performance-tag">
+         <span class="material-symbols-rounded" style="font-size: 12px; margin-right: 4px;">speed</span>
+         High Performance Mode
+      </div>
+
+      <!-- Version Tag -->
+      <div id="version-tag">v1.2.0</div>
+
+      <!-- Made With Badge -->
+      <div id="made-with-badge">
+         Made with <span class="heart">♥</span> using WebGL
+      </div>
+
+      <!-- UI Container Layout - Right Side Controls -->
+      <div id="ui-container">
+         <!-- Presets Panel -->
+         <div class="panel expanded" id="presets-panel">
+            <div class="panel-header">
+               <span class="material-symbols-rounded panel-icon">tune</span>
+               <div class="panel-title">Presets</div>
+               <span class="material-symbols-rounded collapse-icon">expand_more</span>
+            </div>
+            <div class="panel-content">
+               <select id="preset-selector" class="dropdown" aria-label="Preset Selection" title="Select a preset">
+                  <option value="default">Default</option>
+                  <option value="nebula">Nebula</option>
+                  <option value="galaxy">Galaxy</option>
+                  <option value="stardust">Stardust</option>
+                  <option value="energetic">Energetic Flow</option>
+                  <option value="performance">Performance Mode</option>
+               </select>
+
+               <div class="button-row">
+                  <div class="button primary" id="load-preset-btn">
+                     <span class="material-symbols-rounded icon">downloading</span>
+                     <span>Load Preset</span>
+                  </div>
+                  <div class="button secondary" id="save-image-btn">
+                     <span class="material-symbols-rounded icon">photo_camera</span>
+                     <span>Save Image</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Particle System Panel -->
+         <div class="panel expanded" id="particle-panel">
+            <div class="panel-header">
+               <span class="material-symbols-rounded panel-icon">grain</span>
+               <div class="panel-title">Particle Properties</div>
+               <span class="material-symbols-rounded collapse-icon">expand_more</span>
+            </div>
+            <div class="panel-content">
+               <div class="slider-container" data-value="50000" data-min="5000" data-max="200000">
+                  <div class="slider-header">
+                     <div class="slider-label" id="count-label">
+                        Particle Count
+                        <span class="tooltip"
+                           >?
+                           <span class="tooltiptext"
+                              >Controls the number of particles rendered. Higher values create denser effects but reduce performance.</span
+                           >
+                        </span>
+                     </div>
+                     <div class="slider-value" id="count-value">50000</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="5000"
+                     max="200000"
+                     step="5000"
+                     value="50000"
+                     class="slider"
+                     id="count-slider"
+                     aria-labelledby="count-label"
+                     title="Particle Count"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="2.0" data-min="0.1" data-max="5.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="size-label">
+                        Particle Size
+                        <span class="tooltip"
+                           >?
+                           <span class="tooltiptext"
+                              >Controls the size of individual particles. Smaller values create more intricate patterns.</span
+                           >
+                        </span>
+                     </div>
+                     <div class="slider-value" id="size-value">2.0</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.1"
+                     max="5.0"
+                     step="0.1"
+                     value="2.0"
+                     class="slider"
+                     id="size-slider"
+                     aria-labelledby="size-label"
+                     title="Particle Size"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="1.0" data-min="0.1" data-max="3.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="speed-label">
+                        Animation Speed
+                        <span class="tooltip"
+                           >?
+                           <span class="tooltiptext"
+                              >Controls the speed of the particle animation. Higher values create more dynamic movement.</span
+                           >
+                        </span>
+                     </div>
+                     <div class="slider-value" id="speed-value">1.0</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.1"
+                     max="3.0"
+                     step="0.1"
+                     value="1.0"
+                     class="slider"
+                     id="speed-slider"
+                     aria-labelledby="speed-label"
+                     title="Animation Speed"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Flow Panel -->
+         <div class="panel expanded" id="flow-panel">
+            <div class="panel-header">
+               <span class="material-symbols-rounded panel-icon">waves</span>
+               <div class="panel-title">Flow Field</div>
+               <span class="material-symbols-rounded collapse-icon">expand_more</span>
+            </div>
+            <div class="panel-content">
+               <div class="slider-container" data-value="3.0" data-min="0.5" data-max="10.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="noise-scale-label">
+                        Noise Scale
+                        <span class="tooltip"
+                           >?
+                           <span class="tooltiptext"
+                              >Controls the scale of the flow field noise. Lower values create more detailed flow patterns.</span
+                           >
+                        </span>
+                     </div>
+                     <div class="slider-value" id="noise-scale-value">3.0</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.5"
+                     max="10.0"
+                     step="0.1"
+                     value="3.0"
+                     class="slider"
+                     id="noise-scale-slider"
+                     aria-labelledby="noise-scale-label"
+                     title="Noise Scale"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="1.5" data-min="0.1" data-max="4.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="curl-intensity-label">
+                        Curl Intensity
+                        <span class="tooltip"
+                           >?
+                           <span class="tooltiptext"
+                              >Controls the intensity of the curl noise, affecting how particles flow around vortices.</span
+                           >
+                        </span>
+                     </div>
+                     <div class="slider-value" id="curl-intensity-value">1.5</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.1"
+                     max="4.0"
+                     step="0.1"
+                     value="1.5"
+                     class="slider"
+                     id="curl-intensity-slider"
+                     aria-labelledby="curl-intensity-label"
+                     title="Curl Intensity"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="0.5" data-min="0.0" data-max="2.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="turbulence-label">
+                        Turbulence
+                        <span class="tooltip"
+                           >?
+                           <span class="tooltiptext"
+                              >Controls the amount of turbulence in the particle motion, creating more chaotic patterns.</span
+                           >
+                        </span>
+                     </div>
+                     <div class="slider-value" id="turbulence-value">0.5</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.0"
+                     max="2.0"
+                     step="0.1"
+                     value="0.5"
+                     class="slider"
+                     id="turbulence-slider"
+                     aria-labelledby="turbulence-label"
+                     title="Turbulence"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Color Panel -->
+         <div class="panel expanded" id="color-panel">
+            <div class="panel-header">
+               <span class="material-symbols-rounded panel-icon">palette</span>
+               <div class="panel-title">Color</div>
+               <span class="material-symbols-rounded collapse-icon">expand_more</span>
+            </div>
+            <div class="panel-content">
+               <div class="color-swatches">
+                  <div class="color-swatch active" data-mode="0" title="Cosmic Blue"></div>
+                  <div class="color-swatch" data-mode="1" title="Nebula"></div>
+                  <div class="color-swatch" data-mode="2" title="Aurora"></div>
+                  <div class="color-swatch" data-mode="3" title="Moonlight"></div>
+                  <div class="color-swatch" data-mode="4" title="Sunset"></div>
+                  <div class="color-swatch" data-mode="5" title="Rainbow"></div>
+               </div>
+
+               <div class="slider-container" data-value="0.8" data-min="0.1" data-max="2.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="color-intensity-label">Color Intensity</div>
+                     <div class="slider-value" id="color-intensity-value">0.8</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.1"
+                     max="2.0"
+                     step="0.1"
+                     value="0.8"
+                     class="slider"
+                     id="color-intensity-slider"
+                     aria-labelledby="color-intensity-label"
+                     title="Color Intensity"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+
+               <div class="slider-container" data-value="1.0" data-min="0.0" data-max="2.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="glow-intensity-label">Glow Intensity</div>
+                     <div class="slider-value" id="glow-intensity-value">1.0</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.0"
+                     max="2.0"
+                     step="0.1"
+                     value="1.0"
+                     class="slider"
+                     id="glow-intensity-slider"
+                     aria-labelledby="glow-intensity-label"
+                     title="Glow Intensity"
+                  />
+                  <div class="slider-track"></div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Camera Panel -->
+         <div class="panel" id="camera-panel">
+            <div class="panel-header">
+               <span class="material-symbols-rounded panel-icon">camera</span>
+               <div class="panel-title">Camera</div>
+               <span class="material-symbols-rounded collapse-icon">expand_more</span>
+            </div>
+            <div class="panel-content">
+               <div class="button" id="reset-camera-btn">
+                  <span class="material-symbols-rounded icon">restart_alt</span>
+                  <span>Reset Camera Position</span>
+               </div>
+
+               <label class="checkbox-container">
+                  <input type="checkbox" id="auto-rotate-checkbox" />
+                  <span class="custom-checkbox"></span>
+                  <span class="checkbox-label">Auto-rotate Camera</span>
+               </label>
+
+               <div class="slider-container" data-value="1.0" data-min="0.1" data-max="3.0">
+                  <div class="slider-header">
+                     <div class="slider-label" id="rotation-speed-label">Rotation Speed</div>
+                     <div class="slider-value" id="rotation-speed-value">1.0</div>
+                  </div>
+                  <input
+                     type="range"
+                     min="0.1"
+                     max="3.0"
+                     step="0.1"
+                     value="1.0"
+                     class="slider"
+                     id="rotation-speed-slider"
+                     aria-labelledby="rotation-speed-label"
+                     title="Rotation Speed"
+                     disabled
+                  />
+                  <div class="slider-track"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Camera Controls - Left Side -->
+      <div id="camera-controls">
+         <div class="control-button" id="zoom-in-btn" title="Zoom In">
+            <span class="material-symbols-rounded control-icon">add</span>
+         </div>
+         <div class="control-button" id="reset-view-btn" title="Reset View">
+            <span class="material-symbols-rounded control-icon">home</span>
+         </div>
+         <div class="control-button" id="zoom-out-btn" title="Zoom Out">
+            <span class="material-symbols-rounded control-icon">remove</span>
+         </div>
+      </div>
+
+      <!-- Help Panel -->
+      <div id="help-panel">
+         <div class="help-header">
+            <div class="help-title">Instructions</div>
+            <div class="close-button" id="close-help">×</div>
+         </div>
+         <div class="help-content">
+            <div class="help-section">
+               <div class="help-section-title">Navigation Controls</div>
+               <div class="help-item">
+                  <div class="help-key">Left Click + Drag</div>
+                  <div class="help-description">Rotate the view</div>
+               </div>
+               <div class="help-item">
+                  <div class="help-key">Right Click + Drag</div>
+                  <div class="help-description">Pan the view</div>
+               </div>
+               <div class="help-item">
+                  <div class="help-key">Mouse Wheel</div>
+                  <div class="help-description">Zoom in and out</div>
+               </div>
+            </div>
+
+            <div class="help-section">
+               <div class="help-section-title">Keyboard Shortcuts</div>
+               <div class="help-item">
+                  <div class="help-key">H</div>
+                  <div class="help-description">Toggle help panel</div>
+               </div>
+               <div class="help-item">
+                  <div class="help-key">R</div>
+                  <div class="help-description">Reset camera position</div>
+               </div>
+               <div class="help-item">
+                  <div class="help-key">S</div>
+                  <div class="help-description">Save screenshot</div>
+               </div>
+               <div class="help-item">
+                  <div class="help-key">Space</div>
+                  <div class="help-description">Toggle auto-rotation</div>
+               </div>
+            </div>
+
+            <div class="help-section">
+               <div class="help-section-title">Tips</div>
+               <ul class="help-tips">
+                  <li>Start with the "Performance" preset if you experience low frame rates.</li>
+                  <li>Decreasing the "Particle Count" greatly improves performance.</li>
+                  <li>For vibrant effects, increase the "Glow Intensity" and "Color Intensity".</li>
+                  <li>Experiment with different "Turbulence" values for unique flow patterns.</li>
+                  <li>Use the "Save Image" button to capture your creations.</li>
+               </ul>
+            </div>
+
+            <div class="help-section">
+               <div class="help-section-title">About Cosmic Particles</div>
+               <p class="help-text">
+                  Cosmic Particles is a WebGL-based particle system simulation that mimics cosmic phenomena
+                  like nebulae, galaxies, and energy flows. The simulation uses curl noise fields to create
+                  natural-looking fluid dynamics, with millions of particles following physically-inspired motion
+                  patterns.
+               </p>
+            </div>
+         </div>
+      </div>
+
+      <!-- Stats display -->
+      <div id="stats">FPS: 0 | Particles: 0</div>
+
+      <!-- Status bar -->
+      <div id="status-bar">
+         <div class="status-item">
+            <span class="material-symbols-rounded status-item-icon">monitor</span>
+            <span id="status-rendering">Initializing...</span>
+         </div>
+         <div class="status-item">
+            <span class="material-symbols-rounded status-item-icon">mouse</span>
+            <span id="status-mouse">X: 0, Y: 0, Z: 0</span>
+         </div>
+      </div>
+
+      <!-- Loading overlay -->
+      <div id="loading-overlay">
+         <div class="logo-large">
+            <svg
+               width="80"
+               height="80"
+               viewBox="0 0 32 32"
+               fill="none"
+               xmlns="http://www.w3.org/2000/svg"
+            >
+               <circle cx="16" cy="16" r="16" fill="#08081f" fill-opacity="0.2" />
+               <circle cx="16" cy="16" r="8" fill="#000" fill-opacity="0" stroke="#4A6FA5" stroke-width="1.5"/>
+               <circle cx="16" cy="16" r="4" fill="#000" fill-opacity="0" stroke="#334E75" stroke-width="1.5"/>
+               <circle cx="16" cy="16" r="1" fill="#4A6FA5"/>
+            </svg>
+         </div>
+         <span class="loader"></span>
+         <div class="loading-text">Initializing Cosmic Particles</div>
+         <div class="progress-container">
+            <div class="progress-bar" id="loading-progress"></div>
+         </div>
+      </div>
+
+      <!-- Welcome modal -->
+      <div id="welcome-modal" style="display: none">
+         <div class="modal-content">
+            <div class="modal-header">
+               <div class="modal-title">
+                  <svg
+                     width="24"
+                     height="24"
+                     viewBox="0 0 32 32"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg"
+                     style="margin-right: 10px; vertical-align: middle"
+                  >
+                     <circle cx="16" cy="16" r="16" fill="#08081f" fill-opacity="0.2" />
+                     <circle cx="16" cy="16" r="8" fill="#000" fill-opacity="0" stroke="#4A6FA5" stroke-width="1.5"/>
+                     <circle cx="16" cy="16" r="4" fill="#000" fill-opacity="0" stroke="#334E75" stroke-width="1.5"/>
+                     <circle cx="16" cy="16" r="1" fill="#4A6FA5"/>
+                  </svg>
+                  Cosmic Particles
+               </div>
+               <div class="close-button" id="close-welcome">×</div>
+            </div>
+            <div class="modal-body">
+               <p>
+                  Welcome to Cosmic Particles - an interactive particle system that simulates the mesmerizing 
+                  flow of cosmic matter through space. Create beautiful, fluid-like animations with millions 
+                  of particles flowing through 3D noise fields.
+               </p>
+
+               <div class="feature-grid">
+                  <div class="feature-item">
+                     <span class="material-symbols-rounded feature-icon">grain</span>
+                     <div class="feature-title">Particle System</div>
+                     <div class="feature-description">
+                        Millions of particles flowing through 3D space with realistic physics
+                     </div>
+                  </div>
+                  <div class="feature-item">
+                     <span class="material-symbols-rounded feature-icon">waves</span>
+                     <div class="feature-title">Flow Fields</div>
+                     <div class="feature-description">
+                        Complex curl noise creates natural, organic movement patterns
+                     </div>
+                  </div>
+                  <div class="feature-item">
+                     <span class="material-symbols-rounded feature-icon">palette</span>
+                     <div class="feature-title">Dynamic Colors</div>
+                     <div class="feature-description">
+                        Vibrant color schemes inspired by cosmic phenomena
+                     </div>
+                  </div>
+                  <div class="feature-item">
+                     <span class="material-symbols-rounded feature-icon">photo_camera</span>
+                     <div class="feature-title">Image Capture</div>
+                     <div class="feature-description">
+                        Save high-quality images of your cosmic creations
+                     </div>
+                  </div>
+               </div>
+
+               <p>Press 'H' anytime to view help and keyboard shortcuts.</p>
+            </div>
+            <div class="modal-footer">
+               <div class="button primary" id="start-exploring-btn">
+                  <span class="material-symbols-rounded icon">explore</span>
+                  <span>Start Exploring</span>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Notification -->
+      <div class="notification" id="notification">
+         <div class="notification-title">Preset Loaded</div>
+         <div class="notification-message">The selected preset has been applied successfully.</div>
+      </div>
+
+      <!-- Progress Bar for Rendering -->
+      <div id="render-progress">
+         <div class="render-progress-inner"></div>
+      </div>
+
+      <!-- JavaScript -->
+      <script src="cosmic-particles.js"></script>
+      <script src="main.js"></script>
+      <script>
+      // Set the preset to Galaxy on page load for immediate galaxy effect
+      document.addEventListener('DOMContentLoaded', function() {
+          // Load galaxy preset when page loads
+          if (window.loadPreset) {
+              window.loadPreset('galaxy');
+          }
+      });
+      </script>
+   </body>
+</html> 
