@@ -53,8 +53,12 @@ WebGL Cosmic Visualizations offers high-performance 3D fractal and particle simu
 ## Live Demo
 
 <div align="center">
-  <a href="https://your-github-username.github.io/webgl-cosmic-visualizations/" target="_blank">
-    <img src="assets/icons/demo-button.png" alt="View Live Demo" width="200">
+  <a href="https://muhkartal.github.io/webGL-cosmicVisualizations/" target="_blank">
+    <picture>
+  <source media="(prefers-color-scheme: dark)" srcset="fig/live-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="fig/live-light.png">
+  <img alt="truthAlign System Architecture" src="fig/live-dark.png" width="85%">
+</picture>
   </a>
 </div>
 
