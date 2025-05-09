@@ -59,9 +59,9 @@ WebGL Cosmic Visualizations offers high-performance 3D fractal and particle simu
   <source media="(prefers-color-scheme: light)" srcset="fig/live-light.png">
   <img alt="truthAlign System Architecture" src="fig/live-dark.png" width="85%">
 </picture>
-'''
+
 <strong>Click the Wisit </strong>
- '''
+
   </a>
 </div>
 
