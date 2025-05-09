@@ -2,11 +2,11 @@
 
 <div align="center">
 
-![Project Banner](assets/images/banner.jpg)
+<!-- ![Project Banner](assets/images/banner.jpg) -->
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![WebGL](https://img.shields.io/badge/WebGL-2.0-green.svg)](https://www.khronos.org/webgl/)
-[![GLSL](https://img.shields.io/badge/GLSL-ES%203.0-orange.svg)](https://www.khronos.org/opengl/wiki/Core_Language_(GLSL))
+[![GLSL](https://img.shields.io/badge/GLSL-ES%203.0-orange.svg)](<https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)>)
 [![Pure JS](https://img.shields.io/badge/JavaScript-Pure-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 **An interactive 3D visualization project featuring WebGL-powered fractal and particle simulations**
@@ -68,7 +68,7 @@ WebGL Cosmic Visualizations offers high-performance 3D fractal and particle simu
   <source media="(prefers-color-scheme: light)" srcset="fig/man-light.png">
   <img alt="truthAlign System Architecture" src="fig/arch-dark.png" width="85%">
 </picture></td>
-      <td><img src="fig/particles-light.png" alt="Cosmic Particles" width="400"></td>
+      <td><img src="fig/particles-light.png" alt="Cosmic Particles" width="85%"></td>
     </tr>
     <tr>
       <td align="center"><em>Mandelbulb Explorer with detailed lighting</em></td>
@@ -124,37 +124,40 @@ The framework consists of four integrated modules that work together to improve 
 
 The project includes several optimizations to maintain high frame rates:
 
-- **Adaptive quality scaling** based on device performance
-- **Temporal anti-aliasing** for smoother visuals
-- **Level-of-detail rendering** for complex fractals
-- **Frustum culling** for particle systems
-- **Instanced rendering** for particle visualization
-- **Texture-based lookup tables** for complex calculations
+-  **Adaptive quality scaling** based on device performance
+-  **Temporal anti-aliasing** for smoother visuals
+-  **Level-of-detail rendering** for complex fractals
+-  **Frustum culling** for particle systems
+-  **Instanced rendering** for particle visualization
+-  **Texture-based lookup tables** for complex calculations
 
 ## Getting Started
 
 ### Prerequisites
 
-- Modern web browser with WebGL 2.0 support
-- Local development server (Python's built-in server, Node.js http-server, etc.)
+-  Modern web browser with WebGL 2.0 support
+-  Local development server (Python's built-in server, Node.js http-server, etc.)
 
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/your-github-username/webgl-cosmic-visualizations.git
    ```
 
 2. Navigate to the project directory:
+
    ```bash
    cd webgl-cosmic-visualizations
    ```
 
 3. Start a local server:
+
    ```bash
    # Using Python (Python 3)
    python -m http.server
-   
+
    # OR using Node.js http-server (if installed)
    http-server
    ```
@@ -169,26 +172,26 @@ The project includes several optimizations to maintain high frame rates:
 <details>
 <summary><strong>Mandelbulb Controls</strong></summary>
 
-- **Left Mouse Button + Drag**: Rotate camera
-- **Right Mouse Button + Drag**: Pan camera
-- **Mouse Wheel**: Zoom in/out
-- **R Key**: Reset view
-- **Q/E Keys**: Increase/decrease fractal power
-- **+/- Keys**: Adjust iteration count
-- **Space**: Toggle auto-rotation
+-  **Left Mouse Button + Drag**: Rotate camera
+-  **Right Mouse Button + Drag**: Pan camera
+-  **Mouse Wheel**: Zoom in/out
+-  **R Key**: Reset view
+-  **Q/E Keys**: Increase/decrease fractal power
+-  **+/- Keys**: Adjust iteration count
+-  **Space**: Toggle auto-rotation
 
 </details>
 
 <details>
 <summary><strong>Particle System Controls</strong></summary>
 
-- **Mouse Movement**: Influence particle flow
-- **Left Click**: Create attraction point
-- **Right Click**: Create repulsion point
-- **Mouse Wheel**: Adjust force strength
-- **1-4 Keys**: Select different presets
-- **R Key**: Reset simulation
-- **P Key**: Pause/resume simulation
+-  **Mouse Movement**: Influence particle flow
+-  **Left Click**: Create attraction point
+-  **Right Click**: Create repulsion point
+-  **Mouse Wheel**: Adjust force strength
+-  **1-4 Keys**: Select different presets
+-  **R Key**: Reset simulation
+-  **P Key**: Pause/resume simulation
 
 </details>
 
@@ -257,12 +260,12 @@ webgl-cosmic-visualizations/
 
 Planned features for upcoming releases:
 
-- Additional fractal types (Julia sets, Menger sponge)
-- VR support for immersive exploration
-- Export functionality for high-resolution renders
-- Audio reactivity for visualizations
-- Additional particle presets and behaviors
-- Custom shader editor for experimentation
+-  Additional fractal types (Julia sets, Menger sponge)
+-  VR support for immersive exploration
+-  Export functionality for high-resolution renders
+-  Audio reactivity for visualizations
+-  Additional particle presets and behaviors
+-  Custom shader editor for experimentation
 
 ## Contributing
 
@@ -280,10 +283,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Inspired by various WebGL demos and fractal mathematics
-- Special thanks to the WebGL and GLSL community for resources and tutorials
-- Fractal formulations based on research by Daniel White and Paul Nylander
-- Curl noise implementation inspired by Robert Bridson's paper on fluid simulation
+-  Inspired by various WebGL demos and fractal mathematics
+-  Special thanks to the WebGL and GLSL community for resources and tutorials
+-  Fractal formulations based on research by Daniel White and Paul Nylander
+-  Curl noise implementation inspired by Robert Bridson's paper on fluid simulation
 
 ---
 
@@ -296,4 +299,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
     <a href="https://github.com/your-github-username/webgl-cosmic-visualizations/issues">Issues</a> •
     <a href="https://your-github-username.github.io/webgl-cosmic-visualizations/">Demo</a>
   </p>
+</div>
+<div align="center">
+Developed by Muhammad Ibrahim Kartal | [kartal.dev](https://kartal.dev)
+
 </div>
