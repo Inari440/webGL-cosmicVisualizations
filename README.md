@@ -124,6 +124,7 @@ The framework consists of four integrated modules that work together to improve 
   <source media="(prefers-color-scheme: light)" srcset="fig/arch-light.png">
   <img alt="truthAlign System Architecture" src="fig/arch-dark.png" width="85%">
 </picture>
+
 ## Performance Optimizations
 
 The project includes several optimizations to maintain high frame rates:
